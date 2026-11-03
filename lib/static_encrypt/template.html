@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>{{title}}</title>
+  <style>
+    :root { --bg: #f4f4f5; --card: #fff; --fg: #18181b; --muted: #71717a;
+            --border: #d4d4d8; --accent: #2563eb; --error: #dc2626; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #09090b; --card: #18181b; --fg: #fafafa; --muted: #a1a1aa;
+              --border: #3f3f46; --accent: #3b82f6; --error: #f87171; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center;
+           padding: 16px; background: var(--bg); color: var(--fg);
+           font: 16px/1.5 system-ui, -apple-system, sans-serif; }
+    form { width: 100%; max-width: 360px; background: var(--card); padding: 28px;
+           border: 1px solid var(--border); border-radius: 12px; }
+    h1 { font-size: 1.25rem; margin: 0 0 4px; }
+    p { color: var(--muted); margin: 0 0 20px; font-size: .9rem; }
+    a { color: var(--accent); font-weight: 600; }
+    input, button { width: 100%; font: inherit; padding: 10px 12px; border-radius: 8px; }
+    input { border: 1px solid var(--border); background: var(--bg); color: var(--fg); }
+    button { margin-top: 12px; border: 0; background: var(--accent); color: #fff;
+             cursor: pointer; font-weight: 600; }
+    button:disabled { opacity: .6; cursor: not-allowed; }
+    [data-static-encrypt="error"] { color: var(--error); min-height: 1.5em; margin: 8px 0 0; font-size: .875rem; }
+    form[aria-busy="true"] [data-static-encrypt="error"] { color: var(--muted); }
+  </style>
+</head>
+<body>
+  <!--
+    static_encrypt template. See "Custom templates" in the README: the
+    placeholders are title, instructions and script (required, once), and the
+    decryptor needs elements with data-static-encrypt="form", "password" and "error".
+  -->
+  <form data-static-encrypt="form">
+    <h1>{{title}}</h1>
+    <p>{{instructions}}</p>
+    <input data-static-encrypt="password" type="password" placeholder="Password" autocomplete="current-password" autofocus required>
+    <button data-static-encrypt="submit" type="submit">Decrypt</button>
+    <div data-static-encrypt="error" role="alert"></div>
+  </form>
+  {{script}}
+</body>
+</html>
+
