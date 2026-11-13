@@ -3,8 +3,8 @@
 require "test_helper"
 
 class TestPage < Minitest::Test
-  def build(data, filename, **options)
-    StaticEncrypt::Page.build(data, "hunter2", filename: filename, iterations: FAST_ITERATIONS, **options)
+  def build(data, filename, **)
+    StaticEncrypt::Page.build(data, "hunter2", filename: filename, iterations: FAST_ITERATIONS, **)
   end
 
   def test_embedded_payload_decrypts

@@ -4,6 +4,8 @@ require "cgi/escape"
 require "json"
 
 module StaticEncrypt
+  # Builds the self-contained HTML page that holds an encrypted file and decrypts
+  # it in the browser once the visitor enters the password.
   module Page
     TEMPLATE_PATH = File.expand_path("template.html", __dir__)
     DECRYPTOR_PATH = File.expand_path("decryptor.js", __dir__)
@@ -47,7 +49,16 @@ module StaticEncrypt
 
     def script(payload)
       json = JSON.generate(payload).gsub("<", "\\u003c")
-      "<script>\n(() => {\n\"use strict\";\nconst payload = #{json};\n#{decryptor}})();\n</script>"
+
+      <<~SCRIPT
+        <script>
+        (() => {
+          "use strict"
+          const payload = #{json};
+          #{decryptor}
+        })();
+        </script>
+      SCRIPT
     end
 
     def validate_template!(template)
