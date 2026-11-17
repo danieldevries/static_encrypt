@@ -2,7 +2,7 @@
 
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "static_encrypt"
-
+require "static_encrypt/cli"
 require "minitest/autorun"
 
 # Keeps the suite fast; real pages use Cipher::DEFAULT_ITERATIONS.
