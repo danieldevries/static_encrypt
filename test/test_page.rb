@@ -103,6 +103,25 @@ class TestPage < Minitest::Test
     assert_match 'data-static-encrypt="error"', error.message
   end
 
+  # File.read without a UTF-8 locale tags the page as US-ASCII; File.binread as binary.
+  def test_payload_reads_pages_whatever_their_encoding_tag
+    html = build("secret", "café.txt")
+
+    [Encoding::US_ASCII, Encoding::BINARY].each do |encoding|
+      payload = StaticEncrypt::Page.payload(html.dup.force_encoding(encoding))
+
+      assert_equal "café.txt", payload[:name], encoding.to_s
+      assert_equal "secret", StaticEncrypt::Cipher.decrypt(payload, "hunter2"), encoding.to_s
+    end
+  end
+
+  def test_payload_does_not_change_its_argument
+    html = build("x", "a.txt").force_encoding(Encoding::US_ASCII)
+    StaticEncrypt::Page.payload(html)
+
+    assert_equal Encoding::US_ASCII, html.encoding
+  end
+
   def test_plaintext_not_in_page
     refute_includes build("top secret contents", "a.txt"), "top secret"
   end

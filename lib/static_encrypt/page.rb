@@ -76,6 +76,7 @@ module StaticEncrypt
     end
 
     def payload(html)
+      html = String.new(html, encoding: Encoding::UTF_8).scrub
       json = html[/const payload = (\{.*?\});$/, 1] or raise Error, "no encrypted payload found"
       JSON.parse(json, symbolize_names: true)
     end
