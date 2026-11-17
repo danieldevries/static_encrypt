@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
     single HTML page that decrypts in the browser with WebCrypto. Host it anywhere.
   DESC
   spec.homepage = "https://github.com/danieldevries/static_encrypt"
-  spec.required_ruby_version = ">= 3.2.0"
+  spec.required_ruby_version = ">= 3.3.0"
   spec.license = "MIT"
 
   spec.metadata["source_code_uri"] = spec.homepage
